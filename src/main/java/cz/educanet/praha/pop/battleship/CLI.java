@@ -22,6 +22,7 @@ public class CLI {
 
     private Player getWhichPlayer() {
         int playerInt = (roundNumb % 2) + 1;
+        System.out.println("Cislo hrace  " +playerInt);
         if (playerInt == 1) {
             return Player.PLAYER1;
         } else {
@@ -56,6 +57,10 @@ public class CLI {
     }
 
     private void shoot() {
+        this.roundNumb++;
+
+        System.out.println("Cislo roundu " + roundNumb);
+
         System.out.println("Zadej X");
         int x = sc.nextInt();
         System.out.println("Zadej Y");
