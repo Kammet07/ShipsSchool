@@ -36,6 +36,7 @@ public class CLI {
         for (int column = 0; column < gameField[0].length; column++) {
             System.out.print(column + " ");
         }
+        System.err.print("X");
 
         for (int row = 0; row < gameField.length; row++) {
             int rowLength = gameField[row].length;
@@ -51,10 +52,13 @@ public class CLI {
                 }
             }
         }
+        System.out.println("\nY");
     }
 
     private void shoot() {
+        System.out.println("Zadej X");
         int x = sc.nextInt();
+        System.out.println("Zadej Y");
         int y = sc.nextInt();
 
         if (game.play(x, y, getWhichPlayer()) == Field.SHIP_PART) {
