@@ -6,34 +6,34 @@ public class BattleShip {
     private Field[][] gameField2 = new Field[10][10];
 
     private static Field[][] gameFieldSetup(Field[][] gameField) {
-        //letadlova lod
+        // letadlova lod
         gameField[0][0] = Field.SHIP_PART;
         gameField[0][1] = Field.SHIP_PART;
         gameField[0][2] = Field.SHIP_PART;
         gameField[0][3] = Field.SHIP_PART;
         gameField[0][4] = Field.SHIP_PART;
 
-        //bitevni lod
+        // bitevni lod
         gameField[5][2] = Field.SHIP_PART;
         gameField[6][2] = Field.SHIP_PART;
         gameField[7][2] = Field.SHIP_PART;
         gameField[8][2] = Field.SHIP_PART;
 
-        //kriznik 1
+        // kriznik 1
         gameField[3][6] = Field.SHIP_PART;
         gameField[4][6] = Field.SHIP_PART;
         gameField[5][6] = Field.SHIP_PART;
 
-        //kriznik 2
+        // kriznik 2
         gameField[7][4] = Field.SHIP_PART;
         gameField[8][4] = Field.SHIP_PART;
         gameField[9][4] = Field.SHIP_PART;
 
-        //hlidkova lod 1
+        // hlidkova lod 1
         gameField[8][0] = Field.SHIP_PART;
         gameField[9][0] = Field.SHIP_PART;
 
-        //hlidkova lod 2
+        // hlidkova lod 2
         gameField[1][5] = Field.SHIP_PART;
         gameField[1][6] = Field.SHIP_PART;
 

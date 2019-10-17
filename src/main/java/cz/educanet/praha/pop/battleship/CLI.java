@@ -8,10 +8,15 @@ public class CLI {
     private Scanner sc = new Scanner(System.in);
 
     public void run() {
+        rulesAndInstructions();
         while (true) {
             printField();
             shoot();
         }
+    }
+
+    private void rulesAndInstructions() {
+        System.out.println("instrukce");
     }
 
     private void printField() {
@@ -40,7 +45,7 @@ public class CLI {
         int x = sc.nextInt();
         int y = sc.nextInt();
 
-        if (game.play(x, y) == Field.SHIP_PART) {
+        if (game.play(x, y, player) == Field.SHIP_PART) {
             System.out.println("Hit!");
         } else {
             System.out.println("Miss!");
