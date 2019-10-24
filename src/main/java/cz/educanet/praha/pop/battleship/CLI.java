@@ -1,77 +1,75 @@
 package cz.educanet.praha.pop.battleship;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 public class CLI {
 
     private BattleShip game = new BattleShip();
     private Scanner sc = new Scanner(System.in);
-    private int roundNumb = 0;
+
+    private Player currentPlayer = Player.PLAYER1;
 
     public void run() {
-        printRulesAndInstructions();
-        while (true) {
+        Optional<Player> winner = game.getWinner();
+        while (!winner.isPresent()) {
             printField();
             shoot();
+            currentPlayer = currentPlayer.other();
+            winner = game.getWinner();
         }
-    }
-
-    private void printRulesAndInstructions() {
-        System.out.println("instrukce");
-    }
-
-    private Player getWhichPlayer() {
-        int playerInt = (roundNumb % 2) + 1;
-        System.out.println("Cislo hrace  " +playerInt);
-        if (playerInt == 1) {
-            return Player.PLAYER1;
-        } else {
-            return Player.PLAYER2;
-        }
+        String playerName = getPlayerName(winner.get());
+        System.out.println("Winner: " + playerName);
     }
 
     private void printField() {
-        Field[][] gameField = game.getField(getWhichPlayer());
+        FieldHistory[][] grid = game.getGrid(currentPlayer.other());
 
+        System.out.println();
         System.out.print(" ");
-        for (int column = 0; column < gameField[0].length; column++) {
-            System.out.print(column + " ");
-        }
-        System.err.print("X");
+        for (int column = 0; column < grid[0].length; column++)
+            System.out.print(column);
 
-        for (int row = 0; row < gameField.length; row++) {
-            int rowLength = gameField[row].length;
 
-            System.out.println("");
+        System.out.println();
+        for (int row = 0; row < grid.length; row++) {
+            int rowLength = grid[row].length;
             System.out.print(row);
             for (int column = 0; column < rowLength; column++) {
-                Field isShipPart = gameField[row][column];
-                if (isShipPart == Field.SHIP_PART) {
-                    System.out.print("⛵ ");
-                } else {
-                    System.out.print("🌊 ");
-                }
+                Field field = grid[row][column];
+                //TODO print "nothing" or previous miss/hit
             }
+            System.out.println();
         }
-        System.out.println("\nY");
     }
 
     private void shoot() {
-        this.roundNumb++;
+        String playerName = getPlayerName(currentPlayer);
+        System.out.println(playerName + "'s turn");
 
-        System.out.println("Cislo roundu " + roundNumb);
+        boolean successfullyTurned = false;
+        do {
+            System.out.print("Enter X:");
+            int x = sc.nextInt();
+            System.out.print("Enter Y:");
+            int y = sc.nextInt();
 
-        System.out.println("Zadej X");
-        int x = sc.nextInt();
-        System.out.println("Zadej Y");
-        int y = sc.nextInt();
+            if (game.isOnGrid(x, y, currentPlayer)) {
+                if (game.shoot(x, y, currentPlayer) == FieldHistory.NONE) //TODO fix
+                    System.out.println("Hit!");
+                else
+                    System.out.println("Miss!");
+                successfullyTurned = true;
+            } else {
+                System.out.println("Invalid coordinates.");
+            }
+        } while (!successfullyTurned);
+    }
 
-        if (game.play(x, y, getWhichPlayer()) == Field.SHIP_PART) {
-            System.out.println("Hit!");
-        } else {
-            System.out.println("Miss!");
-        }
-
+    private String getPlayerName(Player player) {
+        if (player == Player.PLAYER1)
+            return "Player 1";
+        else return "Player 2";
     }
 
     public static void main(String[] args) {
